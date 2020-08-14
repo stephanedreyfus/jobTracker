@@ -3,11 +3,8 @@ import os
 from flask import Flask, render_template, session, g
 from flas_debugtoolbar import DebugToolbasExtension
 from datetime import datetime
-from flask_bcrypt import Bcrypt
+from models import db, connect_db, User
 from flask_mongoengine import MongoEngine
-
-bcrypt = Bcrypt()
-db = MongoEngine()
 
 CURR_USER_KEY = "curr_user"
 
@@ -18,8 +15,8 @@ app.config['MONGODB_SETTINGS'] = {
     'host': 'localhost',
     'port': 27017
 }
-db = MongoEngine()
-db.init_app(app)
+
+connect_db(app)
 
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "blank tomatoes")
