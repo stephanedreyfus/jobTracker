@@ -1,5 +1,6 @@
 """MongoDB models for Job Tracker"""
 
+from flask_mongoengine import MongoEngine
 from flask_bcrypt import Bcrypt
 from datetime import datetime
 
