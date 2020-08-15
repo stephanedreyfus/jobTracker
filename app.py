@@ -2,9 +2,8 @@ import os
 
 from flask import Flask, render_template, session, g, redirect, flash
 from flas_debugtoolbar import DebugToolbasExtension
-from datetime import datetime
 from forms import UserAddForm, UserEditForm, LoginForm, MessageForm
-from models import db, connect_db, User
+from models import connect_db, User
 from flask_mongoengine import NotUniqueError
 
 CURR_USER_KEY = "curr_user"

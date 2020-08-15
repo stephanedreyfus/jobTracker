@@ -61,12 +61,8 @@ class User(Document):
         return user
 
 
-db.app = app
-db.init_app(app)
+def connect_db(app):
+    """Call this in app.py to connect to db"""
 
-# # -----
-# class Post(Document):
-#     title = StringField(max_length=120, required=True)
-#     author = ReferenceField(User)
-#     tags = ListField(StringField(max_length=30))
-#     comments = ListField(EmbeddedDocumentField(Comment))
+    db.app = app
+    db.init_app(app)
