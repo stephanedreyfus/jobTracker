@@ -1,10 +1,11 @@
 import os
 
-from flask import Flask, render_template, session, g
+from flask import Flask, render_template, session, g, redirect, flash
 from flas_debugtoolbar import DebugToolbasExtension
 from datetime import datetime
 from forms import UserAddForm, UserEditForm, LoginForm, MessageForm
 from models import db, connect_db, User
+from flask_mongoengine import NotUniqueError
 
 CURR_USER_KEY = "curr_user"
 
@@ -69,4 +70,13 @@ def signup():
             # Mongodb add command here
 
         # Need to lookup mongodb "entry allready exists" error type
-        except
+        except NotUniqueError as e:
+            flash(f"{e}: Username already exists", 'danger')
+            return render_template('users/signup.html', form=form)
+
+        do_login(user)
+
+        return redirect("/")
+
+    else:
+        return render_template('users/signup.html', form=form)

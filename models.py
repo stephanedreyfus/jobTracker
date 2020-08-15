@@ -27,7 +27,7 @@ class Job(Document):
 
 class User(Document):
     # Need id field
-    name = StringField(max_length=120, required=True)
+    name = StringField(max_length=120, required=True, unique=True)
     email = EmailField(allow_utf8_user=True, required=True)
     password = StringField(max_length=50, min_length=7, required=True)
     jobs = ListField(EmbeddedDocumentField(Job))
