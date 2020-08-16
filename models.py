@@ -21,8 +21,11 @@ db = MongoEngine()
 
 class Job(Document):
     company = StringField(max_length=120, required=True)
-    url = UrlField()
+    url = UrlField(required=True)
     applied = DateTimeField(default=datetime.utcnow, required=True)
+    tech_interview = DateTimeField()
+    onsite = DateTimeField()
+    rejected = DateTimeField()
 
 
 class User(Document):
@@ -54,6 +57,7 @@ class User(Document):
             username=username,
             email=email,
             password=hashed_pwd,
+            # Would rather the image be an actual file...
             image_url=image_url,
         )
 
