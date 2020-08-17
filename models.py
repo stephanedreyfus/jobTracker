@@ -34,7 +34,7 @@ class User(Document):
     email = EmailField(allow_utf8_user=True, required=True)
     password = StringField(max_length=50, min_length=7, required=True)
     jobs = ListField(EmbeddedDocumentField(Job))
-    image_url = ImageField(
+    image = ImageField(
         size=(100, 100, True),
         default="/static/images/profile.png",
     )

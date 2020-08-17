@@ -2,7 +2,13 @@ import os
 
 from flask import Flask, render_template, session, g, redirect, flash
 from flas_debugtoolbar import DebugToolbasExtension
-from forms import UserAddForm, UserEditForm, LoginForm, MessageForm
+from forms import (
+    UserAddForm,
+    UserEditForm,
+    LoginForm,
+    JobAddForm,
+    JobEditForm,
+    )
 from models import connect_db, User
 from flask_mongoengine import NotUniqueError
 
