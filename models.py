@@ -35,7 +35,8 @@ class User(Document):
     password = StringField(max_length=50, min_length=7, required=True)
     jobs = ListField(EmbeddedDocumentField(Job))
     image = ImageField(
-        size=(100, 100, True),
+        size=(300, 300, True),
+        thumbnail_size=(150, 150),
         default="/static/images/profile.png",
     )
     created_on = DateTimeField(default=datetime.utcnow)
@@ -46,7 +47,7 @@ class User(Document):
     # Not requiring jobs yet, and not including in signup. Hopefully
     # will still be able to add later.
     @classmethod
-    def signup(cls, username, email, password, image_url):
+    def signup(cls, username, email, password, image):
         """ Sign up user.
 
         Hashes password and adds user to system."""
@@ -57,8 +58,7 @@ class User(Document):
             username=username,
             email=email,
             password=hashed_pwd,
-            # Would rather the image be an actual file...
-            image_url=image_url,
+            image=image,
         )
 
         user.save()

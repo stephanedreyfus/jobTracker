@@ -11,7 +11,11 @@ from forms import (
     )
 from models import connect_db, User
 from flask_mongoengine import NotUniqueError
+# from werkzeug.utils import secure_filename
 
+# # Need to figure out where to send this for Mongoengine.
+# UPLOAD_FOLDER = '/path/to/the/uploads'
+# ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'gif'}
 CURR_USER_KEY = "curr_user"
 
 app = Flask(__name__)
@@ -70,11 +74,11 @@ def signup():
                 username=form.username.data,
                 password=form.password.data,
                 email=form.email.data,
-                image_url=form.image_url.data or User.image_url.default.arg,
+                image=form.image.data,
             )
-            # Mongodb add command here
 
-        # Need to lookup mongodb "entry allready exists" error type
+            user.save()
+
         except NotUniqueError as e:
             flash(f"{e}: Username already exists", 'danger')
             return render_template('users/signup.html', form=form)
