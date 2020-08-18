@@ -71,7 +71,8 @@ class User(Document):
         If it finds the user, it returns that object, if not
         it returns False.
         """
-        # Not sure if this call will work.
+        # Not sure if this call will work. "Users" should be
+        # the collection name.
         user = cls.db.Users.findOne({username: username})
 
         if user:
