@@ -30,7 +30,7 @@ class Job(Document):
 
 class User(Document):
     # Need id field
-    name = StringField(max_length=120, required=True, unique=True)
+    username = StringField(max_length=120, required=True, unique=True)
     email = EmailField(allow_utf8_user=True, required=True)
     password = StringField(max_length=50, min_length=7, required=True)
     jobs = ListField(EmbeddedDocumentField(Job))
@@ -63,6 +63,23 @@ class User(Document):
 
         user.save()
         return user
+
+    @classmethod
+    def authenticate(cls, username, password):
+        """Find user with `username` and `password`.
+
+        If it finds the user, it returns that object, if not
+        it returns False.
+        """
+        # Not sure if this call will work.
+        user = cls.db.Users.findOne({username: username})
+
+        if user:
+            is_auth = bcrypt.check_password_hash(user.password, password)
+            if is_auth:
+                return user
+
+        return False
 
 
 def connect_db(app):
