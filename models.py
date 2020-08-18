@@ -72,8 +72,8 @@ class User(Document):
         it returns False.
         """
         # Not sure if this call will work. "Users" should be
-        # the collection name.
-        user = cls.db.Users.findOne({username: username})
+        # the collection name. Not sure if cls necessary.
+        user = cls.db.users.findOne({username: username})
 
         if user:
             is_auth = bcrypt.check_password_hash(user.password, password)

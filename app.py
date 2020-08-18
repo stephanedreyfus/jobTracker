@@ -9,7 +9,7 @@ from forms import (
     JobAddForm,
     JobEditForm,
     )
-from models import connect_db, User
+from models import db, connect_db, User
 from flask_mongoengine import NotUniqueError
 # from werkzeug.utils import secure_filename
 
@@ -125,3 +125,42 @@ def logout():
 
 # ###################################################################
 # General user routes
+
+@app.route('/users/profile', methods=["GET", "POST"])
+def edit_profile():
+    """Update profile for current user."""
+
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+
+    user = g.user
+    form = UserEditForm(obj=user)
+
+    if form.validate_on_submit():
+        if User.authenticate(user.unsername, form.password.data):
+            # Again, need "User" to be name of collection.
+            # db.COLLECTION_NAME.save({_id:ObjectId(),NEW_DATA})
+            # Not sure if I have to unpack user object or not.
+            db.usersjobs.Save(
+                {
+                    "_id": user._id,
+                    "username": form.username.data,
+                    "email": form.email.data,
+                    "image": form.image.data or "/static/images/profile.png",
+                    }
+                )
+            # user.username = form.username.data
+            # user.email = form.email.data
+            # user.image = form.image.data or "/static/images/profile.png"
+
+        flash("Wrong password, please try again.", "danger")
+
+    # Here username is being passed to the template in case we want
+    # to go to that users page, but that was mainly for warbler. Not sure
+    # if it's still necessary.
+    return render_template(
+        'users/edit.html',
+        form=form,
+        username=user.username,
+        )
