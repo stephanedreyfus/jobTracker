@@ -1,7 +1,7 @@
 import os
 
 from flask import Flask, render_template, session, g, redirect, flash
-from flas_debugtoolbar import DebugToolbasExtension
+from flask_debugtoolbar import DebugToolbasExtension
 from forms import (
     UserAddForm,
     UserEditForm,
