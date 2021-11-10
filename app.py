@@ -60,6 +60,18 @@ def do_logout():
         del session[CURR_USER_KEY]
 
 
+@app.route('/')
+def splash():
+    """Route visitor to proper page depending on sign in status."""
+    if CURR_USER_KEY in session:
+        # Fetch applications from db
+        apps = []
+        render_template('user_page.html', apps=apps)
+
+    else:
+        return redirect('welcome.html')
+
+
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
     """Handle user signup."""
@@ -80,15 +92,15 @@ def signup():
             user.save()
 
         except NotUniqueError as e:
-            flash(f"{e}: Username already exists", 'danger')
-            return render_template('users/signup.html', form=form)
+            flash(f'{e}: Username already exists', 'danger')
+            return render_template('signup.html', form=form)
 
         do_login(user)
 
-        return redirect("/")
+        return redirect('/')
 
     else:
-        return render_template('users/signup.html', form=form)
+        return render_template('signup.html', form=form)
 
 
 @app.route('/login', methods=["GET", "POST"])
@@ -110,7 +122,7 @@ def login():
 
         flash("Invalide credentials.", "danger")
 
-    return render_template('users/login.html', form=form)
+    return render_template('login.html', form=form)
 
 
 @app.route('/logout')
