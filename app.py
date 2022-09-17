@@ -1,7 +1,7 @@
 import os
 
 from flask import Flask, render_template, session, g, redirect, flash
-from flask_debugtoolbar import DebugToolbasExtension
+from flask_debugtoolbar import DebugToolbarExtension
 from forms import (
     UserAddForm,
     UserEditForm,
@@ -28,7 +28,7 @@ app.config['MONGODB_SETTINGS'] = {
 
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "blank tomatoes")
-toolbar = DebugToolbasExtension(app)
+toolbar = DebugToolbarExtension(app)
 
 connect_db(app)
 
@@ -41,7 +41,7 @@ def add_user_to_g():
     """If user logged in, add curr user to Flask global"""
 
     if CURR_USER_KEY in session:
-        g.user - User.query.get(session[CURR_USER_KEY])
+        g.user = User.query.get(session[CURR_USER_KEY])
 
     else:
         g.user = None

@@ -42,7 +42,7 @@ class User(Document):
     created_on = DateTimeField(default=datetime.utcnow)
 
     def __repr__(self):
-        return f"<User #{self.id}: {self.username}, {len(self.jobs)}"
+        return f"<User #{self.id}: {self.username}, Jobs: {len(self.jobs)}"
 
     # Not requiring jobs yet, and not including in signup. Hopefully
     # will still be able to add later.
