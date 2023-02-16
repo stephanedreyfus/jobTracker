@@ -31,5 +31,5 @@ pymongo==3.12.1
 six==1.16.0
 traitlets==5.1.1
 wcwidth==0.2.5
-Werkzeug==2.0.2
+Werkzeug==2.2.3
 WTForms==3.0.0
